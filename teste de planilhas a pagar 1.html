@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planilha de Contas a Pagar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 3px solid #333; /* Borda em negrito */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .aguardando {
+            color: red;
+        }
+        .pago {
+            color: green;
+        }
+        .observacoes {
+            font-style: italic;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <h1><strong><em>Planilha de Contas a Pagar</em></strong></h1>
+
+    <canvas id="contasChart"></canvas>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Credor</th>
+                <th>Data</th>
+                <th>Status</th>
+                <th>Observações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" value="Fornecedor A" onchange="updateChart()"></td>
+                <td><input type="date" value="2023-10-01" onchange="updateChart()"></td>
+                <td>
+                    <div>
+                        <label>
+                            <input type="checkbox" onchange="updateChart(this)"> Aguardando Pagamento
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="checkbox" onchange="updateChart(this)"> Pago
+                        </label>
+                    </div>
+                </td>
+                <td><input type="text" value="Pagamento até o dia 5" onchange="updateChart()"></td>
+            </tr>
+            <tr>
+                <td><input type="text" value="Fornecedor B" onchange="updateChart()"></td>
+                <td><input type="date" value="2023-10-05" onchange="updateChart()"></td>
+                <td>
+                    <div>
+                        <label>
+                            <input type="checkbox" onchange="updateChart(this)"> Aguardando Pagamento
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="checkbox" onchange="updateChart(this)"> Pago
+                        </label>
+                    </div>
+                </td>
+                <td><input type="text" value="Pagamento realizado" onchange="updateChart()"></td>
+            </tr>
+            <tr>
+                <td><input type="text" value="Fornecedor C" onchange="updateChart()"></td>
+                <td><input type="date" value="2023-10-10" onchange="updateChart()"></td>
+                <td>
+                    <div>
+                        <label>
+                            <input type="checkbox" onchange="updateChart(this)"> Aguardando Pagamento
+                        </label>
+                    </div>
+                    <div>
+                        <label>
+                            <input type="checkbox" onchange="updateChart(this)"> Pago
+                        </label>
+                    </div>
+                </td>
+                <td><input type="text" value="Verificar nota fiscal" onchange="updateChart()"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // Função para atualizar o gráfico
+    function updateChart(checkbox) {
+        const rows = document.querySelectorAll('tbody tr');
+        let contasPagas = 0;
+        let contasAguardando = 0;
+
+        rows.forEach(row => {
+            const checkboxes = row.querySelectorAll('input[type="
